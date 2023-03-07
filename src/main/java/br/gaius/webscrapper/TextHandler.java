@@ -87,7 +87,7 @@ public class TextHandler {
 		return Files.exists(filePath);
 	}
 
-	public static String getFileName() {
+	private static String getFileName() {
 		String fileName = "tabela samsung";
 		LocalDate date = LocalDate.now();
 		String extension = "csv";
