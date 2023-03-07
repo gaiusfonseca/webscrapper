@@ -69,22 +69,27 @@ public class TextHandler {
 
 	// TODO test check file name
 	// TODO test check whether exists after running
-	// TODO test check exceptions
-	public static boolean createFile(String content) {
+	// TODO test check FileNotFoundException
+	// TODO test check SecurityException
+	public static void createFile(String content) {
 
 		Path filePath = Paths.get(System.getProperty("user.home"), "Downloads", getFileName());
 
 		try (Formatter formatter = new Formatter(filePath.toFile())) {
 			formatter.format("%s", content);
 		} catch (FileNotFoundException e) {
-			e.getMessage();
+			System.err.println("Não foi possível criar o arquivo");
+			System.err.println(e.getMessage());
 			System.exit(1);
 		} catch (SecurityException e) {
-			e.getMessage();
+			System.err.println("Não foi possível criar o arquivo");
+			System.err.println(e.getMessage());
 			System.exit(2);
 		}
 
-		return Files.exists(filePath);
+		if(Files.exists(filePath)) {
+			System.out.println("arquivo criado com sucesso");
+		}
 	}
 
 	private static String getFileName() {
