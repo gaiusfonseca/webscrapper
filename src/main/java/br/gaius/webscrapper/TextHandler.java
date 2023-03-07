@@ -81,7 +81,7 @@ public class TextHandler {
 			System.exit(1);
 		} catch (SecurityException e) {
 			e.getMessage();
-			System.exit(1);
+			System.exit(2);
 		}
 
 		return Files.exists(filePath);
