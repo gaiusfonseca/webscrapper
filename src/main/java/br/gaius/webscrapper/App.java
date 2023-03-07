@@ -36,16 +36,7 @@ public class App{
 		content = TextHandler.getValues(content);
 		
 		//parse data into item objects
-		File file = Paths.get("/home", "gaiusfonseca",  "Downloads", TextHandler.renameFile()).toFile();
-		try(Formatter formatter = new Formatter(file)){
-			formatter.format("%s", content);
-		}catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.exit(1);
-		}catch (SecurityException e) {
-			e.printStackTrace();
-			System.exit(2);
-		}
+		TextHandler.createFile(content);
 		
 		//put item objects into a list
 		
