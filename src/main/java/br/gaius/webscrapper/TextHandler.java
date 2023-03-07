@@ -21,13 +21,13 @@ public class TextHandler {
 		patternBuilder.append("'modelName': '(.*)',|");
 		patternBuilder.append("'damageDescription': '(.*)',|");
 		patternBuilder.append("'repairCost': '(.*)'");
-		
+
 		Pattern pattern = getPattern(patternBuilder.toString());
 		Matcher matcher = pattern.matcher(content);
-		
+
 		final int PROPERTIES_LENGTH = 4;
 		int i = 0;
-		
+
 		while (matcher.find()) {
 			outputBuilder.append(matcher.group());
 
@@ -50,41 +50,48 @@ public class TextHandler {
 
 		Pattern pattern = getPattern(patternBuilder.toString());
 		Matcher matcher = pattern.matcher(content);
-		
+
 		final int PROPERTIES_LENGTH = 4;
-		
-		while(matcher.find()) {
-			for(int i = 1; i <= matcher.groupCount(); i++) {
-				if(i == matcher.groupCount()) {
+
+		while (matcher.find()) {
+			for (int i = 1; i <= matcher.groupCount(); i++) {
+				if (i == matcher.groupCount()) {
 					outputBuilder.append(matcher.group(i) + "\n");
-				}else {
+				} else {
 					outputBuilder.append(matcher.group(i) + "; ");
 				}
 			}
-			
+
 		}
-		
+
 		return outputBuilder.toString();
 	}
-	
-	public static boolean createFile(String fileName) {
 
-		Path filePath = Paths.get(System.getProperty("user.home"), "Downloads", fileName);
-		
-		try (Formatter formatter = new Formatter(filePath.toFile())){
-			formatter.format("%s", "saitou san!");
+	// TODO test check file name
+	// TODO test check whether exists after running
+	// TODO test check exceptions
+	public static boolean createFile(String content) {
+
+		Path filePath = Paths.get(System.getProperty("user.home"), "Downloads", getFileName());
+
+		try (Formatter formatter = new Formatter(filePath.toFile())) {
+			formatter.format("%s", content);
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			e.getMessage();
+			System.exit(1);
+		} catch (SecurityException e) {
+			e.getMessage();
+			System.exit(1);
 		}
 
 		return Files.exists(filePath);
 	}
-	
-	public static String renameFile() {
-		String fileName = "tabela-samsung";
+
+	public static String getFileName() {
+		String fileName = "tabela samsung";
 		LocalDate date = LocalDate.now();
 		String extension = "csv";
-		
+
 		return String.format("%s %s.%s", fileName, date.toString(), extension);
 	}
 }
